@@ -1,8 +1,11 @@
 package kz.edu.sdu.diploma.divisor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import kz.edu.sdu.diploma.domain.Syllable;
 import kz.edu.sdu.diploma.domain.Text;
 import kz.edu.sdu.diploma.domain.Word;
 
@@ -162,12 +165,28 @@ public class Divisor {
 					e.printStackTrace();
 				}
 				
-				if(word.length() == w.getLastSyllableLength()) 
+				if(word.length() == w.getLastSyllableLength()) {
 					word = "";
-				else
+					w.getLastSyllable().setPosition(Syllable.Position.LAST);
+				}
+				else {
 					word = word.substring(w.getLastSyllableLength());
+					w.getLastSyllable().setPosition(Syllable.Position.FIRST);
+				}
 			}
 		}
+	}
+	
+	public Map<Syllable,Word> getSyllableMap() {
+		Map<Syllable, Word> syllableMap = new HashMap<Syllable, Word>();
+		
+		for(Word word : text.getWordList()) {
+			for(Syllable syllable : word.getSyllableList()) {
+				syllableMap.put(syllable, word);
+			}
+		}
+		
+		return syllableMap;
 	}
 	
 	private List<Integer> getYindex(String word) {

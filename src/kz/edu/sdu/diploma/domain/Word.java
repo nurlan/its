@@ -52,4 +52,11 @@ public class Word {
 		
 		return -1;
 	}
+	
+	public Syllable getLastSyllable() {
+		if(this.syllableList != null )
+			return ((this.syllableList.size()!=0)?this.syllableList.get(this.syllableList.size()-1):null);
+		
+		return null;
+	}
 }
